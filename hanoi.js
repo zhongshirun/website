@@ -2,8 +2,13 @@ const THICKNESS=60;
 const TOPWIDTH=100;
 const INDENT=10;
 const GAP=20;
+const COLUMN_WIDTH = 30; // 每个柱子的宽度  
+const COLUMN_SPACING = 460;
 var RATIO=0.1;
+
 N=8;
+
+
 
 function layer(n,i)
 {
@@ -52,7 +57,7 @@ function disk(w,h,i)
         +'<div style="margin:-'+h1/2+'px 0px -'+(h1+h)+'px 0px;width:'+w+'px;height:'+h1+'px;background-color:'+color+';border-radius:'+(w/2)+'px/'+h1/2+'px"></div>'
         +'<div style="width:'+(w-2)+'px;height:'+h1+'px;background-image: radial-gradient(#101010,#305020,15%,yellow,'+color+');border-radius: '+(w/2-1)+'px/'+h1/2+'px;border:1px red solid;"></div>';
        return s;
-}
+}    
 
 function moveDisk(i)
 {
@@ -129,6 +134,33 @@ let kftext="@keyframes diskmoveK{0%{left:X;top:Y}\n30%{left:X;top:0px}\n70%{left
     disk.style.left=x1;
     disk.style.top=y1;
 }
+
+function createColumn(index) {  
+    let column = document.createElement("div");  
+    column.className = "column";  
+    column.style.position = "absolute";  
+    column.style.left =  (index * (COLUMN_WIDTH + COLUMN_SPACING)) + 'px'; // 根据索引设置位置  
+    column.style.top = '6px';  
+    column.style.width = COLUMN_WIDTH + 'px';  
+    column.style.height ='558px';  
+    column.style.border = '1px solid black';// 添加边框以便可见 
+	column.style.backgroundColor = 'orange';
+    document.body.appendChild(column);  
+}  
+  
+// 在开始时创建三个柱子  
+function createPillars() {  
+    createColumn(0); // 源柱子  
+    createColumn(1); // 辅助柱子（中间）  
+    createColumn(2); // 目标柱子  
+}  
+
+
+
+createPillars();  
+
+
 movedisk(0);
+
 for(let i=1;i<instructions.length;i++)
 setTimeout('movedisk('+i+')',i*1010);
